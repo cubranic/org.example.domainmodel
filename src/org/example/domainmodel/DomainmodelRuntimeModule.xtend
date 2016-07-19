@@ -3,8 +3,17 @@
  */
 package org.example.domainmodel
 
+import com.google.inject.Binder
+import org.eclipse.xtext.scoping.IScopeProvider
+import com.google.inject.name.Names
+import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
+import org.example.domainmodel.scoping.ImplicitImportsScopeProvider
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 class DomainmodelRuntimeModule extends AbstractDomainmodelRuntimeModule {
+    override configureIScopeProviderDelegate(Binder binder) {
+        binder.bind(IScopeProvider).annotatedWith(Names.named(AbstractDeclarativeScopeProvider.NAMED_DELEGATE)).to(ImplicitImportsScopeProvider);
+    }
 }
